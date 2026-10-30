@@ -41,3 +41,38 @@ footer{padding:28px 0;border-top:1px solid var(--bd);font-size:13px;color:var(--
 .pi{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}.pi small{color:var(--mut)}.ac{display:flex;gap:6px}
 .d{list-style:none;padding:12px 0 0;margin:14px 0 0;border-top:1px dashed var(--bd);font-size:13.5px;color:var(--mut)}.d li{padding:3px 0}.d b{color:var(--ac)}
 canvas#cv{width:100%;height:auto;background:#fff;border:1.5px dashed var(--ac);border-radius:12px;touch-action:none;display:block}.sig{height:48px;background:#fff;border-radius:6px;display:block;margin:6px 0}.wide{grid-column:1/-1}.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* Social proof quotes */
+.quote p{margin:0 0 12px;font-size:1.05rem;line-height:1.45;font-style:italic;color:var(--tx)}
+.quote small{color:var(--mut);font-size:13px}
+
+/* Mobile-first: form controls, slots, signature, header */
+@media(max-width:640px){
+  header .w{height:52px}
+  nav{display:none}
+  .slots{gap:10px}
+  .slots button{
+    min-width:72px;
+    min-height:44px;
+    padding:12px 14px;
+    font-size:15px;
+  }
+  canvas#cv{
+    min-height:160px;
+    height:160px;
+    touch-action:none;
+  }
+  .btn{min-height:44px;padding:12px 18px}
+  .btn.s{min-height:40px;padding:10px 14px}
+  input,select,textarea{min-height:44px;font-size:16px}
+  .pi{flex-direction:column;align-items:flex-start}
+  .ac{width:100%}
+  .ac .btn{flex:1}
+  .kp{gap:14px}
+  .kp b{font-size:1.35rem}
+  .band{padding:28px 18px}
+  .t th,.t td{padding:10px 8px;font-size:13px}
+}
+@media(max-width:400px){
+  .slots button{min-width:64px;padding:10px 12px}
+}
