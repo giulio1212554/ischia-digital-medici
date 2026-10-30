@@ -52,7 +52,7 @@ function dlRicetta(label,nre,at,btn){
   doc.setDrawColor(180);doc.line(W-78,158,W-20,158);
   doc.setTextColor(130);doc.setFontSize(7);
   doc.text('Demo Ischia Digital · Le ricette ufficiali restano emesse dal sistema abilitato del medico.',14,285);
-  doc.save('ricetta-'+nre+'.pdf');if(btn)btn.textContent='PDF scaricato';
+  doc.save('ricetta-'+nre+'.pdf');try{track('pdf_download',{type:'ricetta',id:nre})}catch(e){}if(btn)btn.textContent='PDF scaricato';
 }
 clr();pn();
 /* 03 fatture */
@@ -86,7 +86,7 @@ function dlFattura(n,desc,euro){
   doc.text('Esente IVA art. 10 DPR 633/72',18,132);
   doc.setTextColor(130);doc.setFontSize(7);
   doc.text('Demo Ischia Digital · Documento fittizio a scopo dimostrativo.',14,285);
-  doc.save('fattura-'+n+'-2026.pdf');
+  doc.save('fattura-'+n+'-2026.pdf');try{track('pdf_download',{type:'fattura',id:String(n)})}catch(e){}
 }
 /* 04 pdf */
 let pv=0;
@@ -118,7 +118,7 @@ function dlDoc(titolo,ver){
   doc.text('Può essere rigenerato in qualsiasi momento dai dati aggiornati.',18,110);
   doc.setTextColor(130);doc.setFontSize(7);
   doc.text('Ischia Digital — demo · Documento fittizio a scopo dimostrativo.',14,285);
-  doc.save('documento-studio-v'+ver+'.pdf');
+  doc.save('documento-studio-v'+ver+'.pdf');try{track('pdf_download',{type:'documento',ver:ver})}catch(e){}
 }
 /* 05 assistente */
 const FQ=[[/orar|apert/,'Riceviamo lun–ven 9:00–13:00 e 15:00–18:00 su appuntamento.'],[/cost|prezz|quanto/,'Visita €80, ECG €50, certificato €40. Pagamento online o in studio.'],[/ricet/,'Invia la richiesta dall’area ricette: il medico risponde entro 24 ore.'],[/fattur/,'Le fatture sono in area paziente, scaricabili in PDF.'],[/urgen/,'Per urgenze chiama il 112. Questo servizio non gestisce emergenze.']];
