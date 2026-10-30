@@ -11,7 +11,6 @@
   let loaded=false;
   frame.addEventListener('load',function(){loaded=true;if(note)note.hidden=true});
   frame.src=u;
-  // Fallback se l'iframe non carica entro 6s
   setTimeout(function(){
     if(loaded)return;
     if(note){
@@ -21,7 +20,7 @@
   },6000);
 })();
 async function inviaDemo(ev){
-  ev.preventDefault();
+  ev.preventDefault();try{track('form_demo_submit',{studio:(new FormData(ev.target)).get('studio')})}catch(e){}
   const d=Object.fromEntries(new FormData(ev.target));
   const msg=`Ciao, vorrei una demo personalizzata di Ischia Digital.\nNome: ${d.nome}\nStudio: ${d.studio}\nSpecialità: ${d.spec||'-'}\nMedici: ${d.medici}\nContatto: ${d.contatto}`;
   const wa='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(msg);
