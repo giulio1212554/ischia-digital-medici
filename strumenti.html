@@ -1,4 +1,61 @@
-<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Strumenti — Ischia Digital</title><meta name="description" content="Prova gli strumenti per lo studio medico: prenotazioni, ricette con firma, fatture, PDF, assistente, calcolatore e quiz."><link rel="stylesheet" href="style.css"></head><body><header><div class="w"><a class="logo" href="index.html" style="color:inherit;text-decoration:none"><i></i>Ischia Digital</a><nav><a href="strumenti.html">Strumenti</a><a href="piani.html">Piani e differenze</a><a href="demo.html">Demo</a></nav><a class="btn s" href="demo.html#richiedi">Richiedi demo</a></div></header><section><div class="w"><span class="n">Strumenti live</span><h2 class="rv">Prova quello che avrebbero i tuoi pazienti.</h2><p class="sub rv">Funzionano qui in pagina, con dati di esempio. Prenota una visita o richiedi una ricetta, poi passa al pannello dello studio.</p><div class="g g2"><div class="c rv "><span class="n">01 · Prenotazioni</span><h3>Scegli visita, data e orario</h3><label>Tipo di visita</label><select id="bt"><option>Visita di controllo</option><option>Cardiologia</option><option>ECG</option><option>Certificato</option></select><label>Data</label><input type="date" id="bd"><div class="slots" id="sl"></div><div id="bk"></div></div><div class="c rv "><span class="n">02 · Ricette con firma del medico</span><h3>Richiedi una ricetta</h3><label>Farmaco</label><input id="rf" value="Ramipril 5 mg"><button class="btn s" style="margin-top:10px" onclick="rx()">Invia richiesta</button><div id="rr"></div></div></div><div class="c rv " style="margin-top:18px"><span class="n">Pannello dello studio</span><h3>Richieste in attesa</h3><div id="pq"></div><div id="sg" hidden style="margin-top:16px"><h3 id="sgt">Firma</h3><canvas id="cv" width="400" height="120"></canvas><div style="display:flex;gap:8px;margin-top:8px"><button class="btn s" id="sb" disabled onclick="sgn()">Firma e invia</button><button class="btn s o" onclick="clr()">Cancella</button></div><div id="pm"></div></div></div><div class="g g2" style="margin-top:18px"><div class="c rv "><span class="n">03 · Fatture</span><h3>Emetti una fattura</h3><label>Prestazione</label><select id="fs"><option value="80">Visita di controllo · €80</option><option value="120">Cardiologia + ECG · €120</option><option value="40">Certificato · €40</option></select><button class="btn s" style="margin-top:10px" onclick="inv()">Genera fattura</button><div id="fr"></div></div><div class="c rv "><span class="n">04 · PDF generico</span><h3>Documento dello studio</h3><label>Titolo</label><input id="pt" value="Consenso informato"><button class="btn s" style="margin-top:10px" onclick="pdf()">Genera</button><div id="pp"></div></div></div><div class="g g2" style="margin-top:18px"><div class="c rv "><span class="n">05 · Assistente</span><h3>Domande frequenti</h3><div id="ch" style="min-height:80px;max-height:200px;overflow:auto;border:1px solid var(--bd);border-radius:12px;padding:10px;margin-bottom:8px"></div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px"><button class="btn s o" onclick="ask('Orari')">Orari</button><button class="btn s o" onclick="ask('Costi')">Costi</button><button class="btn s o" onclick="ask('Ricette')">Ricette</button><button class="btn s o" onclick="ask('Fatture')">Fatture</button><button class="btn s o" onclick="ask('Urgenza')">Urgenza</button></div><div style="display:flex;gap:6px"><input id="cq" placeholder="Scrivi una domanda…"><button class="btn s" onclick="askT()">Invia</button></div></div><div class="c rv "><span class="n">06 · Calcolatore</span><h3>Quanto costa la tua segreteria?</h3><label>Telefonate al giorno: <b id="v1">40</b></label><input type="range" id="a1" min="10" max="120" value="40" oninput="calc()"><label>Minuti per telefonata: <b id="v2">4</b></label><input type="range" id="a2" min="2" max="10" value="4" oninput="calc()"><label>Costo orario segreteria (€): <b id="v3">16</b></label><input type="range" id="a3" min="10" max="30" value="16" oninput="calc()"><div class="res" id="cr"></div></div></div></div></section><section><div class="w"><div class="band rv"><span class="n" style="color:var(--ac2)">Dopo gli strumenti</span><h2>Quanto costa e cosa cambia?</h2><p class="sub">Confronta Ischia Digital con la segreteria tradizionale e scegli il piano.</p><div class="ctas"><a class="btn" href="piani.html">Vedi piani e differenze</a></div></div></div></section><footer><div class="w">© 2026 Ischia Digital · Valori e prezzi indicativi · <a href="privacy.html" style="color:inherit">Privacy</a></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Strumenti — Ischia Digital</title><meta name="description" content="Prova gli strumenti per lo studio medico: prenotazioni, ricette con firma, fatture, PDF, assistente, calcolatore e quiz."><link rel="stylesheet" href="style.css"></head><body><header><div class="w"><a class="logo" href="index.html" style="color:inherit;text-decoration:none"><i></i>Ischia Digital</a><nav><a href="strumenti.html">Strumenti</a><a href="piani.html">Piani e differenze</a><a href="demo.html">Demo</a></nav><a class="btn s" href="demo.html#richiedi">Richiedi demo</a></div></header>
+<section><div class="w"><span class="n">Strumenti live</span><h2 class="rv">Prova quello che avrebbero i tuoi pazienti.</h2><p class="sub rv">Funzionano qui in pagina, con dati di esempio. Prenota una visita o richiedi una ricetta, poi passa al pannello dello studio.</p>
+
+<div class="g g2">
+<div class="c rv"><span class="n">01 · Prenotazioni</span><h3>Scegli visita, data e orario</h3>
+<label>Tipo di visita</label><select id="bt"><option>Visita di controllo</option><option>Cardiologia</option><option>ECG</option><option>Certificato</option></select>
+<label>Data</label><input type="date" id="bd"><div class="slots" id="sl"></div><div id="bk"></div>
+<ul class="d"><li><b>Paziente:</b> sceglie il tipo di visita, la data e un orario libero. Gli orari già occupati sono disattivati, quindi niente doppioni.</li><li><b>Studio:</b> la richiesta arriva in agenda, il medico la conferma o la rifiuta con un tocco.</li><li><b>Automatico:</b> il paziente riceve la conferma e un promemoria SMS o email 24 ore prima.</li><li><b>Toglie:</b> le telefonate per fissare, spostare e ricordare gli appuntamenti.</li></ul></div>
+
+<div class="c rv"><span class="n">02 · Ricette con firma del medico</span><h3>Richiedi una ricetta</h3>
+<label>Farmaco</label><input id="rf" value="Ramipril 5 mg">
+<button class="btn s" style="margin-top:10px" onclick="rx()">Invia richiesta</button><div id="rr"></div>
+<ul class="d"><li><b>Paziente:</b> indica il farmaco e invia la richiesta. Vede lo stato: ricevuta, in revisione, emessa.</li><li><b>Medico:</b> vede l’elenco delle richieste in attesa, controlla, firma con il dito o il mouse e preme “Firma e invia”.</li><li><b>Automatico:</b> la firma entra nel PDF, viene generato il codice NRE e il paziente riceve il documento.</li><li><b>Toglie:</b> telefonate, foglietti e messaggi sparsi per le ricette di terapie già in corso.</li></ul></div>
+</div>
+
+<div class="c rv" style="margin-top:18px"><span class="n">Pannello dello studio</span><h3>Richieste in attesa</h3>
+<div id="pq"></div>
+<div id="sg" hidden style="margin-top:16px"><h3 id="sgt">Firma</h3>
+<canvas id="cv" width="400" height="120"></canvas>
+<div style="display:flex;gap:8px;margin-top:8px"><button class="btn s" id="sb" disabled onclick="sgn()">Firma e invia</button><button class="btn s o" onclick="clr()">Cancella</button></div>
+<div id="pm"></div></div></div>
+
+<div class="g g2" style="margin-top:18px">
+<div class="c rv"><span class="n">03 · Fatture</span><h3>Emetti una fattura</h3>
+<label>Prestazione</label><select id="fs"><option value="80">Visita di controllo · €80</option><option value="120">Cardiologia + ECG · €120</option><option value="40">Certificato · €40</option></select>
+<button class="btn s" style="margin-top:10px" onclick="inv()">Genera fattura</button><div id="fr"></div>
+<ul class="d"><li><b>Studio:</b> sceglie la prestazione (visita, cardiologia, ECG, certificato) e la fattura nasce numerata e con la dicitura esente IVA.</li><li><b>Paziente:</b> la trova nella sua area, la scarica e la paga online. Lo stato passa da “Da pagare” a “Pagata”.</li><li><b>Toglie:</b> la compilazione a mano, l’invio e l’inseguimento dei pagamenti.</li></ul></div>
+
+<div class="c rv"><span class="n">04 · PDF generico</span><h3>Documento dello studio</h3>
+<label>Titolo</label><input id="pt" value="Consenso informato">
+<button class="btn s" style="margin-top:10px" onclick="pdf()">Genera</button><div id="pp"></div>
+<ul class="d"><li><b>Come:</b> ricette, fatture e certificati non sono file fissi: si costruiscono dai dati ogni volta, con lo stesso layout dello studio.</li><li><b>Rigenera:</b> “Rigenera PDF” li ricrea aggiornati, quindi non si perdono e non restano versioni vecchie in giro.</li><li><b>Toglie:</b> impaginare, archiviare e rimandare documenti smarriti.</li></ul></div>
+</div>
+
+<div class="g g2" style="margin-top:18px">
+<div class="c rv"><span class="n">05 · Assistente</span><h3>Domande frequenti</h3>
+<div id="ch" style="min-height:80px;max-height:200px;overflow:auto;border:1px solid var(--bd);border-radius:12px;padding:10px;margin-bottom:8px"></div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+<button class="btn s o" onclick="ask('Orari')">Orari</button>
+<button class="btn s o" onclick="ask('Costi')">Costi</button>
+<button class="btn s o" onclick="ask('Ricette')">Ricette</button>
+<button class="btn s o" onclick="ask('Fatture')">Fatture</button>
+<button class="btn s o" onclick="ask('Urgenza')">Urgenza</button></div>
+<div style="display:flex;gap:6px"><input id="cq" placeholder="Scrivi una domanda…"><button class="btn s" onclick="askT()">Invia</button></div>
+<ul class="d"><li><b>Risponde:</b> subito a orari, costi, ricette, fatture e urgenze. Per le urgenze rimanda al 112.</li><li><b>Se non sa:</b> inoltra la domanda alla segreteria.</li><li><b>Toglie:</b> le domande ripetitive del tipo “a che ora aprite?” o “quanto costa?”.</li></ul></div>
+
+<div class="c rv"><span class="n">06 · Calcolatore</span><h3>Quanto costa la tua segreteria?</h3>
+<label>Telefonate al giorno: <b id="v1">40</b></label><input type="range" id="a1" min="10" max="120" value="40" oninput="calc()">
+<label>Minuti per telefonata: <b id="v2">4</b></label><input type="range" id="a2" min="2" max="10" value="4" oninput="calc()">
+<label>Costo orario segreteria (€): <b id="v3">16</b></label><input type="range" id="a3" min="10" max="30" value="16" oninput="calc()">
+<div class="res" id="cr"></div>
+<ul class="d"><li><b>Come:</b> il medico inserisce telefonate al giorno, minuti per chiamata e costo orario. Vede il risparmio mensile stimato e in quanti mesi si ripaga il sito.</li></ul></div>
+</div>
+
+</div></section>
+<section><div class="w"><div class="band rv"><span class="n" style="color:var(--ac2)">Dopo gli strumenti</span><h2>Quanto costa e cosa cambia?</h2><p class="sub">Confronta Ischia Digital con la segreteria tradizionale e scegli il piano.</p><div class="ctas"><a class="btn" href="piani.html">Vedi piani e differenze</a></div></div></div></section>
+<footer><div class="w">© 2026 Ischia Digital · Valori e prezzi indicativi · <a href="privacy.html" style="color:inherit">Privacy</a></div></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="common.js"></script>
 <script src="tools.js"></script>
 </body></html>
