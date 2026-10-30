@@ -27,20 +27,32 @@ $('pm').innerHTML=`<div class="doc"><b>Ricetta firmata e inviata</b><br>${E(labe
 rr();pn();cur=null}
 function dlRicetta(label,nre,at,btn){
   if(!window.jspdf){alert('Libreria PDF non caricata');return}
-  const {jsPDF}=window.jspdf;const doc=new jsPDF();
-  doc.setFontSize(16);doc.text('Ricetta medica (demo)',20,20);
-  doc.setFontSize(11);
-  doc.text(`Farmaco: ${label}`,20,35);
-  doc.text(`Codice NRE (esempio): ${nre}`,20,45);
-  doc.text(`Firmata alle: ${at}`,20,55);
-  doc.text('Documento generato in demo da Ischia Digital',20,70);
-  doc.text('Le ricette ufficiali restano emesse dal sistema abilitato del medico.',20,80);
-  try{
-    const img=document.querySelector('#rr .sig')||document.querySelector('img.sig');
-    if(img&&img.src&&img.src.startsWith('data:')){doc.addImage(img.src,'PNG',20,90,60,18);}
-  }catch(e){}
-  doc.save(`ricetta-${nre}.pdf`);
-  if(btn)btn.textContent='PDF scaricato';
+  const {jsPDF}=window.jspdf,doc=new jsPDF(),W=doc.internal.pageSize.getWidth();
+  doc.setFillColor(15,42,48);doc.rect(0,0,W,26,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(13);doc.setFont(undefined,'bold');
+  doc.text('Studio Medico Dr.ssa Giulia Bianchi',14,11);
+  doc.setFontSize(8);doc.setFont(undefined,'normal');
+  doc.text('Via Roma 12 · 80077 Ischia (NA) · P.IVA 01234567890',14,19);
+  doc.setTextColor(15,42,48);doc.setFontSize(15);doc.setFont(undefined,'bold');
+  doc.text('RICETTA MEDICA',14,38);
+  doc.setFontSize(8);doc.setFont(undefined,'normal');doc.setTextColor(90);
+  doc.text('Documento dimostrativo — dati fittizi',14,44);
+  doc.setTextColor(15,42,48);doc.setDrawColor(11,122,117);doc.setLineWidth(.4);
+  doc.roundedRect(14,50,W-28,42,2,2,'S');doc.setFontSize(10);
+  doc.text('Paziente: Mario Bianchi',18,60);
+  doc.text('CF: BNCMRA80A01H501X (esempio)',18,67);
+  doc.text('Data: '+new Date().toLocaleDateString('it-IT')+'  ·  NRE: '+nre,18,74);
+  doc.text('Firmata alle: '+at,18,81);
+  doc.setFont(undefined,'bold');doc.setFontSize(11);doc.text('Prescrizione',14,104);
+  doc.setFont(undefined,'normal');doc.text(label,14,112);
+  doc.setFontSize(8);doc.setTextColor(90);doc.text('Posologia secondo indicazioni del medico.',14,119);
+  try{const img=document.querySelector('#rr .sig')||document.querySelector('img.sig');
+    if(img&&img.src&&img.src.startsWith('data:'))doc.addImage(img.src,'PNG',W-78,140,48,16)}catch(e){}
+  doc.setTextColor(15,42,48);doc.setFontSize(8);doc.text('Firma del medico',W-78,160);
+  doc.setDrawColor(180);doc.line(W-78,158,W-20,158);
+  doc.setTextColor(130);doc.setFontSize(7);
+  doc.text('Demo Ischia Digital · Le ricette ufficiali restano emesse dal sistema abilitato del medico.',14,285);
+  doc.save('ricetta-'+nre+'.pdf');if(btn)btn.textContent='PDF scaricato';
 }
 clr();pn();
 /* 03 fatture */
@@ -49,17 +61,32 @@ $('fr').innerHTML=`<div class="doc"><b>Fattura n. ${n}/2026</b><br>${E(desc)} ·
 function pay(){const p=$('pg');if(p){p.className='d';p.textContent='Pagata'}}
 function dlFattura(n,desc,euro){
   if(!window.jspdf){alert('Libreria PDF non caricata');return}
-  const {jsPDF}=window.jspdf;const doc=new jsPDF();
+  const {jsPDF}=window.jspdf,doc=new jsPDF(),W=doc.internal.pageSize.getWidth();
   const d=new Date().toLocaleDateString('it-IT');
-  doc.setFontSize(16);doc.text('Studio Medico — Fattura',20,20);
-  doc.setFontSize(11);
-  doc.text(`Numero: ${n}/2026`,20,35);
-  doc.text(`Data: ${d}`,20,42);
-  doc.text(`Descrizione: ${desc}`,20,55);
-  doc.text(`Importo: € ${Number(euro).toFixed(2)}`,20,62);
-  doc.text('Esente IVA art. 10 DPR 633/72',20,69);
-  doc.text('Documento generato in demo da Ischia Digital',20,85);
-  doc.save(`fattura-${n}-2026.pdf`);
+  doc.setFillColor(15,42,48);doc.rect(0,0,W,26,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(13);doc.setFont(undefined,'bold');
+  doc.text('Studio Medico Dr.ssa Giulia Bianchi',14,11);
+  doc.setFontSize(8);doc.setFont(undefined,'normal');
+  doc.text('Via Roma 12 · 80077 Ischia (NA) · P.IVA 01234567890',14,19);
+  doc.setTextColor(15,42,48);doc.setFontSize(15);doc.setFont(undefined,'bold');
+  doc.text('FATTURA n. '+n+'/2026',14,38);
+  doc.setFontSize(10);doc.setFont(undefined,'normal');doc.text('Data: '+d,14,46);
+  doc.setDrawColor(11,122,117);doc.setLineWidth(.4);
+  doc.roundedRect(14,52,W-28,24,2,2,'S');
+  doc.text('Cliente: Mario Bianchi',18,62);
+  doc.text('CF: BNCMRA80A01H501X (esempio)',18,69);
+  doc.setFillColor(223,241,239);doc.rect(14,86,W-28,9,'F');
+  doc.setFont(undefined,'bold');doc.setFontSize(9);
+  doc.text('Descrizione',18,92);doc.text('Importo',W-42,92);
+  doc.setFont(undefined,'normal');doc.setFontSize(10);
+  doc.text(desc,18,106);doc.text('€ '+Number(euro).toFixed(2),W-42,106);
+  doc.setDrawColor(200);doc.line(14,112,W-14,112);
+  doc.setFont(undefined,'bold');doc.text('Totale',18,124);doc.text('€ '+Number(euro).toFixed(2),W-42,124);
+  doc.setFont(undefined,'normal');doc.setFontSize(8);doc.setTextColor(90);
+  doc.text('Esente IVA art. 10 DPR 633/72',18,132);
+  doc.setTextColor(130);doc.setFontSize(7);
+  doc.text('Demo Ischia Digital · Documento fittizio a scopo dimostrativo.',14,285);
+  doc.save('fattura-'+n+'-2026.pdf');
 }
 /* 04 pdf */
 let pv=0;
@@ -72,16 +99,26 @@ function pdf(){
 }
 function dlDoc(titolo,ver){
   if(!window.jspdf){alert('Libreria PDF non caricata');return}
-  const {jsPDF}=window.jspdf;const doc=new jsPDF();
+  const {jsPDF}=window.jspdf,doc=new jsPDF(),W=doc.internal.pageSize.getWidth();
   const d=new Date().toLocaleString('it-IT');
-  doc.setFontSize(16);doc.text(titolo,20,20);
-  doc.setFontSize(11);
-  doc.text(`Versione: ${ver}`,20,35);
-  doc.text(`Generato: ${d}`,20,42);
-  doc.text('Documento di esempio con layout dello studio.',20,55);
-  doc.text('In produzione i dati vengono presi dal gestionale e dal profilo dello studio.',20,65);
-  doc.text('Ischia Digital — demo',20,85);
-  doc.save(`documento-studio-v${ver}.pdf`);
+  doc.setFillColor(15,42,48);doc.rect(0,0,W,26,'F');
+  doc.setTextColor(255,255,255);doc.setFontSize(13);doc.setFont(undefined,'bold');
+  doc.text('Studio Medico Dr.ssa Giulia Bianchi',14,11);
+  doc.setFontSize(8);doc.setFont(undefined,'normal');
+  doc.text('Via Roma 12 · 80077 Ischia (NA) · P.IVA 01234567890',14,19);
+  doc.setTextColor(15,42,48);doc.setFontSize(14);doc.setFont(undefined,'bold');
+  doc.text(titolo,14,40);
+  doc.setFontSize(8);doc.setFont(undefined,'normal');doc.setTextColor(90);
+  doc.text('Versione '+ver+' · Generato il '+d,14,47);
+  doc.setTextColor(15,42,48);doc.setDrawColor(11,122,117);doc.setLineWidth(.4);
+  doc.roundedRect(14,54,W-28,70,2,2,'S');doc.setFontSize(10);
+  const lines=doc.splitTextToSize('Documento di esempio con il layout dello studio. In produzione i dati vengono presi dal gestionale e dal profilo dello studio: paziente, data, contenuto clinico e firma digitale dove previsto.',W-40);
+  doc.text(lines,18,66);
+  doc.setFontSize(8);doc.setTextColor(90);
+  doc.text('Può essere rigenerato in qualsiasi momento dai dati aggiornati.',18,110);
+  doc.setTextColor(130);doc.setFontSize(7);
+  doc.text('Ischia Digital — demo · Documento fittizio a scopo dimostrativo.',14,285);
+  doc.save('documento-studio-v'+ver+'.pdf');
 }
 /* 05 assistente */
 const FQ=[[/orar|apert/,'Riceviamo lun–ven 9:00–13:00 e 15:00–18:00 su appuntamento.'],[/cost|prezz|quanto/,'Visita €80, ECG €50, certificato €40. Pagamento online o in studio.'],[/ricet/,'Invia la richiesta dall’area ricette: il medico risponde entro 24 ore.'],[/fattur/,'Le fatture sono in area paziente, scaricabili in PDF.'],[/urgen/,'Per urgenze chiama il 112. Questo servizio non gestisce emergenze.']];
