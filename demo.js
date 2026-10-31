@@ -1,5 +1,6 @@
 (function(){
   const KEY='ischia_studio_brand';
+  const STUDIO_SITE='https://studiomedico-giulio19.vercel.app';
   const $id=id=>document.getElementById(id);
 
   function read(){
@@ -12,14 +13,14 @@
     };
   }
 
-  function brandURL(d){
+  function studioURL(d){
     const p=new URLSearchParams();
     if(d.nome)p.set('studio',d.nome);
     if(d.doc)p.set('doc',d.doc);
     if(d.spec)p.set('spec',d.spec);
     if(d.citta)p.set('citta',d.citta);
     if(d.tel)p.set('tel',d.tel);
-    return location.pathname+'?'+p.toString();
+    return STUDIO_SITE+'/?'+p.toString();
   }
 
   function save(d){
@@ -44,7 +45,6 @@
     const foot=$id('pvFoot');
     const telEl=$id('pvTel');
     const share=$id('shareLink');
-    const openFull=$id('openFull');
 
     if(logo){logo.childNodes[0].textContent=nome+' '}
     if(specEl)specEl.textContent=spec+' · '+citta;
@@ -54,15 +54,12 @@
     if(telEl)telEl.textContent=tel?('Tel. '+tel):'Tel. —';
 
     if(d.nome){
-      const url=brandURL(d);
-      const abs=location.origin+url;
-      if(share){share.value=abs;share.hidden=false}
-      if(openFull){openFull.href=url;openFull.hidden=false}
+      const url=studioURL(d);
+      if(share){share.value=url;share.hidden=false}
       const go=$id('goTools');
-      if(go)go.href='strumenti.html?'+url.split('?')[1];
+      if(go)go.href=url;
     } else {
       if(share)share.hidden=true;
-      if(openFull)openFull.hidden=true;
     }
 
     const fStudio=$id('fStudio');
@@ -108,7 +105,8 @@
   if(applyBtn)applyBtn.addEventListener('click',function(){
     const d=read();
     if(!d.nome){alert('Inserisci il nome dello studio');return}
-    location.href=brandURL(d);
+    save(d);
+    window.open(studioURL(d),'_blank','noopener');
   });
 
   const reset=$id('btnReset');
