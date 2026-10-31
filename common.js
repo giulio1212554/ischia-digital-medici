@@ -4,7 +4,6 @@ const $=i=>document.getElementById(i),E=s=>String(s).replace(/[&<>"]/g,c=>({'&':
 const io=new IntersectionObserver(a=>a.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 function rvInit(){document.querySelectorAll('.rv:not(.in),.sx:not(.in)').forEach(e=>io.observe(e))}rvInit();
 
-/* Scroll: evita salti orribili e gestisce meglio i link interni */
 (function(){
   if('scrollRestoration' in history){history.scrollRestoration='auto'}
   document.addEventListener('click',function(e){
@@ -37,7 +36,6 @@ function rvInit(){document.querySelectorAll('.rv:not(.in),.sx:not(.in)').forEach
   }
 })();
 
-/* Tracking minimo (console + dataLayer se presente) */
 function track(event, props){
   const payload=Object.assign({event:event,ts:Date.now(),path:location.pathname},props||{});
   try{console.info('[track]',payload)}catch(e){}
@@ -56,3 +54,18 @@ document.addEventListener('click',function(e){
     track('click_scarica_pdf',{label:(a.textContent||'').trim()});
   }
 });
+
+/* Branding personalizzato da demo */
+(function(){
+  try{
+    var raw=localStorage.getItem('ischia_studio_brand');
+    if(!raw)return;
+    var b=JSON.parse(raw);
+    if(!b||!b.nome)return;
+    var bar=document.createElement('div');
+    bar.setAttribute('role','status');
+    bar.style.cssText='background:#121a2b;color:#c8d0e0;font-size:13px;padding:8px 14px;text-align:center';
+    bar.innerHTML='Anteprima per <strong style="color:#fff">'+b.nome.replace(/[<>]/g,'')+'</strong>'+(b.citta?' · '+b.citta.replace(/[<>]/g,''):'')+' · <a href="demo.html" style="color:#9ec1ff">Modifica</a>';
+    document.body.insertBefore(bar,document.body.firstChild);
+  }catch(e){}
+})();
