@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Demo — Ischia Digital</title>
-<meta name="description" content="Inserisci i dati del tuo studio e vedi subito il sito personalizzato.">
+<meta name="description" content="Inserisci i dati del tuo studio e personalizza tutto il sito con un link.">
 <link rel="stylesheet" href="style.css">
 <style>
 .pers-grid{display:grid;gap:28px;align-items:start}
@@ -49,8 +49,8 @@
 <section id="demo">
   <div class="w">
     <span class="n">Demo live</span>
-    <h2 class="rv">Metti i dati del tuo studio. Si personalizza subito.</h2>
-    <p class="sub rv">Niente attesa: nome, specialità e città entrano nel sito in tempo reale. Poi, se ti convince, chiedi la demo completa.</p>
+    <h2 class="rv">Metti i dati del tuo studio. Si personalizza tutto il sito.</h2>
+    <p class="sub rv">Compila, clicca “Personalizza tutto il sito”: ottieni un link. Aprendo quel link, barra, titoli e PDF usano il nome del tuo studio.</p>
 
     <div class="pers-grid rv">
       <div class="c">
@@ -72,10 +72,19 @@
         <input id="pCitta" type="text" placeholder="es. Ischia" value="Ischia">
         <label for="pTel">Telefono studio</label>
         <input id="pTel" type="text" placeholder="es. 081 99 00 00">
-        <p class="hint">I dati restano solo sul tuo browser. Non li inviamo finché non richiedi la demo.</p>
+        <p class="hint">I dati restano sul browser finché non richiedi la demo via form.</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
-          <a class="btn" href="strumenti.html" id="goTools">Prova gli strumenti col tuo nome</a>
+          <button type="button" class="btn" id="btnApply">Personalizza tutto il sito →</button>
+          <a class="btn o" href="strumenti.html" id="goTools" style="color:inherit">Prova gli strumenti</a>
           <button type="button" class="btn o" id="btnReset" style="color:inherit">Reimposta</button>
+        </div>
+        <div style="margin-top:14px">
+          <label for="shareLink">Link da condividere</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input id="shareLink" type="text" readonly hidden style="flex:1;min-width:200px;font-size:13px">
+            <button type="button" class="btn s" id="btnCopy">Copia link</button>
+          </div>
+          <p class="hint">Esempio: demo.html?studio=Studio+Rossi&citta=Ischia</p>
         </div>
       </div>
 
