@@ -1,7 +1,153 @@
-<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Demo — Ischia Digital</title><meta name="description" content="Prova la demo online o richiedi una demo personalizzata per il tuo studio."><meta property="og:title" content="Demo — Ischia Digital"><meta property="og:description" content="Prova la demo online o richiedi una demo personalizzata per il tuo studio."><link rel="stylesheet" href="style.css"></head><body><header><div class="w"><a class="logo" href="index.html" style="color:inherit;text-decoration:none"><i></i>Ischia Digital</a><nav><a href="strumenti.html">Strumenti</a><a href="piani.html">Piani e differenze</a><a href="demo.html">Demo</a></nav><a class="btn s" href="demo.html#richiedi">Richiedi demo</a></div></header><section id="demo"><div class="w"><span class="n">Demo</span><h2 class="rv">Il sito di uno studio, online adesso.</h2><p class="sub rv">Così vedono il tuo studio i pazienti. Dati di esempio.</p>
-<div class="dg rv"><div class="ph"><iframe id="df" title="Demo sito studio medico" loading="lazy"></iframe></div><div><p id="dn" hidden style="color:var(--mut)">La demo sarà disponibile a breve.</p><p style="color:var(--mut);max-width:44ch">Prenotazioni, ricette, fatture e assistente: gli stessi strumenti che hai provato, dentro un sito vero con il nome del tuo studio.</p><a id="do" class="btn" target="_blank" rel="noopener" href="#">Apri la demo a schermo intero</a></div></div></div></section><section id="richiedi"><div class="w"><div class="band rv"><span class="n" style="color:var(--ac2)">Demo personalizzata</span><h2>Vediamo il tuo studio. 30 minuti.</h2><p class="sub">Ti mostriamo il sito con il nome e i servizi del tuo studio. Nessun impegno.</p>
-<form id="fm" onsubmit="inviaDemo(event)"><div class="row2"><div><label for="fNome">Nome e cognome *</label><input id="fNome" name="nome" required autocomplete="name" placeholder="Es. Dott. Rossi"></div><div><label for="fStudio">Nome dello studio *</label><input id="fStudio" name="studio" required placeholder="Es. Studio Medico Rossi"></div></div>
-<div class="row2"><div><label for="fSpec">Specialità</label><select id="fSpec" name="spec"><option value="">Seleziona…</option><option>Medico di base</option><option>Specialista</option><option>Dentista</option><option>Fisioterapista</option><option>Altro</option></select></div><div><label for="fMed">Quanti medici?</label><select id="fMed" name="medici"><option>1</option><option>2–4</option><option>5+</option></select></div></div>
-<label for="fCont">Email o telefono *</label><input id="fCont" name="contatto" required placeholder="email@studio.it oppure +39 …">
-<label class="ck"><input type="checkbox" required> <span>Ho letto l’<a href="privacy.html" target="_blank">informativa privacy</a>.</span></label>
-<button class="btn" style="margin-top:14px" type="submit">Richiedi la demo personalizzata</button></form></div></div></section><footer><div class="w">© 2026 Ischia Digital · Valori e prezzi indicativi · <a href="privacy.html" style="color:inherit">Privacy</a></div></footer><script src="common.js"></script><script src="demo.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Demo — Ischia Digital</title>
+<meta name="description" content="Inserisci i dati del tuo studio e vedi subito il sito personalizzato.">
+<link rel="stylesheet" href="style.css">
+<style>
+.pers-grid{display:grid;gap:28px;align-items:start}
+@media(min-width:860px){.pers-grid{grid-template-columns:1fr 1.05fr}}
+.preview-shell{background:var(--navy,#0b1220);border-radius:20px;padding:10px 10px 16px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.preview-bar{display:flex;gap:6px;padding:6px 8px 10px}
+.preview-bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25);display:block}
+.preview-frame{background:#fff;border-radius:12px;overflow:hidden;min-height:420px;color:#0c1222;font-size:14px}
+.pv-hdr{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #e8ecf0}
+.pv-logo{font-weight:700;font-size:15px}
+.pv-logo small{display:block;font-weight:500;font-size:11px;color:#6b7280}
+.pv-nav{display:flex;gap:12px;font-size:12px;color:#6b7280}
+.pv-hero{padding:28px 18px;background:linear-gradient(160deg,#0b1220 0%,#1a2744 100%);color:#fff}
+.pv-hero h3{font-family:Georgia,serif;font-size:1.45rem;margin:0 0 8px;font-weight:500;line-height:1.2}
+.pv-hero p{margin:0 0 14px;opacity:.8;font-size:13px;max-width:32ch}
+.pv-hero .pv-btn{display:inline-block;background:#fff;color:#0b1220;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:600}
+.pv-body{padding:16px}
+.pv-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pv-card{border:1px solid #e8ecf0;border-radius:10px;padding:12px}
+.pv-card b{display:block;font-size:13px;margin-bottom:4px}
+.pv-card span{font-size:12px;color:#6b7280}
+.pv-foot{padding:12px 16px;border-top:1px solid #e8ecf0;font-size:11px;color:#6b7280;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.hint{font-size:13px;color:var(--mut);margin:10px 0 0}
+.live-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#1f6b4a;background:#e6f5ee;padding:4px 10px;border-radius:999px;margin-bottom:12px}
+.live-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:#1f6b4a;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+</style>
+</head>
+<body>
+<header>
+  <div class="w">
+    <a class="logo" href="index.html" style="color:inherit;text-decoration:none"><i></i>Ischia Digital</a>
+    <nav>
+      <a href="strumenti.html">Strumenti</a>
+      <a href="piani.html">Piani e differenze</a>
+      <a href="demo.html">Demo</a>
+    </nav>
+    <a class="btn s" href="#richiedi">Richiedi demo</a>
+  </div>
+</header>
+
+<section id="demo">
+  <div class="w">
+    <span class="n">Demo live</span>
+    <h2 class="rv">Metti i dati del tuo studio. Si personalizza subito.</h2>
+    <p class="sub rv">Niente attesa: nome, specialità e città entrano nel sito in tempo reale. Poi, se ti convince, chiedi la demo completa.</p>
+
+    <div class="pers-grid rv">
+      <div class="c">
+        <span class="live-badge">Anteprima in tempo reale</span>
+        <label for="pNome">Nome dello studio *</label>
+        <input id="pNome" type="text" placeholder="es. Studio Medico Rossi" autocomplete="organization">
+        <label for="pDoc">Medico / titolare</label>
+        <input id="pDoc" type="text" placeholder="es. Dr.ssa Giulia Bianchi">
+        <label for="pSpec">Specialità</label>
+        <select id="pSpec">
+          <option>Medico di base</option>
+          <option>Cardiologia</option>
+          <option>Dentista</option>
+          <option>Fisioterapia</option>
+          <option>Dermatologia</option>
+          <option>Specialista</option>
+        </select>
+        <label for="pCitta">Città</label>
+        <input id="pCitta" type="text" placeholder="es. Ischia" value="Ischia">
+        <label for="pTel">Telefono studio</label>
+        <input id="pTel" type="text" placeholder="es. 081 99 00 00">
+        <p class="hint">I dati restano solo sul tuo browser. Non li inviamo finché non richiedi la demo.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+          <a class="btn" href="strumenti.html" id="goTools">Prova gli strumenti col tuo nome</a>
+          <button type="button" class="btn o" id="btnReset" style="color:inherit">Reimposta</button>
+        </div>
+      </div>
+
+      <div class="preview-shell">
+        <div class="preview-bar"><i></i><i></i><i></i></div>
+        <div class="preview-frame" id="preview">
+          <div class="pv-hdr">
+            <div class="pv-logo" id="pvLogo">Studio Medico Demo<small id="pvSpec">Medicina generale · Ischia</small></div>
+            <div class="pv-nav"><span>Prenota</span><span>Ricette</span><span>Contatti</span></div>
+          </div>
+          <div class="pv-hero">
+            <h3 id="pvTitle">Benvenuti nello Studio Medico Demo</h3>
+            <p id="pvLead">Prenota online, richiedi ricette e documenti. Assistenza 24/7.</p>
+            <span class="pv-btn">Prenota una visita</span>
+          </div>
+          <div class="pv-body">
+            <div class="pv-cards">
+              <div class="pv-card"><b>Prenotazioni</b><span>Solo slot liberi, conferma subito</span></div>
+              <div class="pv-card"><b>Ricette</b><span>Richiesta online, firma del medico</span></div>
+              <div class="pv-card"><b>Fatture</b><span>Documenti pronti in PDF</span></div>
+              <div class="pv-card"><b>Orari</b><span id="pvOrari">Lun–Ven · su appuntamento</span></div>
+            </div>
+          </div>
+          <div class="pv-foot">
+            <span id="pvFoot">© Studio Medico Demo · Ischia</span>
+            <span id="pvTel">Tel. —</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="richiedi">
+  <div class="w">
+    <div class="band rv">
+      <span class="n" style="color:var(--ac2)">Demo completa</span>
+      <h2>Ti convince? La facciamo sul serio in 30 minuti.</h2>
+      <p class="sub">Stessi dati, sito completo e flusso reale. Nessun impegno.</p>
+      <form id="fm" onsubmit="inviaDemo(event)">
+        <div class="row2">
+          <div><label for="fNome">Il tuo nome *</label><input id="fNome" name="nome" required autocomplete="name"></div>
+          <div><label for="fStudio">Nome dello studio *</label><input id="fStudio" name="studio" required autocomplete="organization"></div>
+        </div>
+        <div class="row2">
+          <div>
+            <label for="fSpec">Specialità</label>
+            <select id="fSpec" name="spec">
+              <option value="">Seleziona…</option>
+              <option>Medico di base</option>
+              <option>Specialista</option>
+              <option>Dentista</option>
+              <option>Fisioterapista</option>
+              <option>Altro</option>
+            </select>
+          </div>
+          <div>
+            <label for="fMed">Quanti medici?</label>
+            <select id="fMed" name="medici"><option>1</option><option>2–4</option><option>5+</option></select>
+          </div>
+        </div>
+        <label for="fCont">Email o telefono *</label>
+        <input id="fCont" name="contatto" required placeholder="email@studio.it oppure +39 …">
+        <label class="ck"><input type="checkbox" required> <span>Ho letto l’<a href="privacy.html" target="_blank">informativa privacy</a>.</span></label>
+        <button class="btn" style="margin-top:14px" type="submit">Richiedi la demo personalizzata</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer><div class="w">© 2026 Ischia Digital · Valori e prezzi indicativi · <a href="privacy.html" style="color:inherit">Privacy</a></div></footer>
+<script src="common.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>
