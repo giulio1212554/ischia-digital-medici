@@ -12,16 +12,22 @@
     };
   }
 
+  function brandURL(d){
+    const p=new URLSearchParams();
+    if(d.nome)p.set('studio',d.nome);
+    if(d.doc)p.set('doc',d.doc);
+    if(d.spec)p.set('spec',d.spec);
+    if(d.citta)p.set('citta',d.citta);
+    if(d.tel)p.set('tel',d.tel);
+    return location.pathname+'?'+p.toString();
+  }
+
   function save(d){
     try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}
   }
 
   function load(){
-    try{
-      const raw=localStorage.getItem(KEY);
-      if(!raw)return null;
-      return JSON.parse(raw);
-    }catch(e){return null}
+    try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}
   }
 
   function apply(d){
@@ -37,15 +43,27 @@
     const lead=$id('pvLead');
     const foot=$id('pvFoot');
     const telEl=$id('pvTel');
+    const share=$id('shareLink');
+    const openFull=$id('openFull');
 
-    if(logo){
-      logo.childNodes[0].textContent=nome+' ';
-    }
+    if(logo){logo.childNodes[0].textContent=nome+' '}
     if(specEl)specEl.textContent=spec+' · '+citta;
     if(title)title.textContent='Benvenuti'+(doc?', '+doc:'')+' — '+nome;
     if(lead)lead.textContent='Prenota online, richiedi ricette e documenti presso '+nome+'. Assistenza 24/7.';
     if(foot)foot.textContent='© '+nome+' · '+citta;
     if(telEl)telEl.textContent=tel?('Tel. '+tel):'Tel. —';
+
+    if(d.nome){
+      const url=brandURL(d);
+      const abs=location.origin+url;
+      if(share){share.value=abs;share.hidden=false}
+      if(openFull){openFull.href=url;openFull.hidden=false}
+      const go=$id('goTools');
+      if(go)go.href='strumenti.html?'+url.split('?')[1];
+    } else {
+      if(share)share.hidden=true;
+      if(openFull)openFull.hidden=true;
+    }
 
     const fStudio=$id('fStudio');
     const fSpec=$id('fSpec');
@@ -67,23 +85,48 @@
     el.addEventListener('change',onInput);
   });
 
-  const prev=load();
-  if(prev){
-    if($id('pNome')&&prev.nome)$id('pNome').value=prev.nome;
-    if($id('pDoc')&&prev.doc)$id('pDoc').value=prev.doc;
-    if($id('pSpec')&&prev.spec)$id('pSpec').value=prev.spec;
-    if($id('pCitta')&&prev.citta)$id('pCitta').value=prev.citta;
-    if($id('pTel')&&prev.tel)$id('pTel').value=prev.tel;
+  const p=new URLSearchParams(location.search);
+  if(p.get('studio')||p.get('nome')){
+    if($id('pNome'))$id('pNome').value=p.get('studio')||p.get('nome')||'';
+    if($id('pDoc'))$id('pDoc').value=p.get('doc')||p.get('medico')||'';
+    if($id('pSpec')&&(p.get('spec')||p.get('specialita')))$id('pSpec').value=p.get('spec')||p.get('specialita');
+    if($id('pCitta'))$id('pCitta').value=p.get('citta')||p.get('city')||'Ischia';
+    if($id('pTel'))$id('pTel').value=p.get('tel')||'';
+  } else {
+    const prev=load();
+    if(prev){
+      if($id('pNome')&&prev.nome)$id('pNome').value=prev.nome;
+      if($id('pDoc')&&prev.doc)$id('pDoc').value=prev.doc;
+      if($id('pSpec')&&prev.spec)$id('pSpec').value=prev.spec;
+      if($id('pCitta')&&prev.citta)$id('pCitta').value=prev.citta;
+      if($id('pTel')&&prev.tel)$id('pTel').value=prev.tel;
+    }
   }
   apply(read());
 
+  const applyBtn=$id('btnApply');
+  if(applyBtn)applyBtn.addEventListener('click',function(){
+    const d=read();
+    if(!d.nome){alert('Inserisci il nome dello studio');return}
+    location.href=brandURL(d);
+  });
+
   const reset=$id('btnReset');
   if(reset)reset.addEventListener('click',()=>{
-    ['pNome','pDoc','pTel'].forEach(id=>{if($id(id))$id(id).value=''});
-    if($id('pCitta'))$id('pCitta').value='Ischia';
-    if($id('pSpec'))$id('pSpec').selectedIndex=0;
     try{localStorage.removeItem(KEY)}catch(e){}
-    apply(read());
+    location.href=location.pathname;
+  });
+
+  const copyBtn=$id('btnCopy');
+  if(copyBtn)copyBtn.addEventListener('click',function(){
+    const share=$id('shareLink');
+    if(!share||!share.value)return;
+    navigator.clipboard.writeText(share.value).then(function(){
+      copyBtn.textContent='Copiato!';
+      setTimeout(function(){copyBtn.textContent='Copia link'},1500);
+    }).catch(function(){
+      share.select();document.execCommand('copy');
+    });
   });
 })();
 
